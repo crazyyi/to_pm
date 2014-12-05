@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-sm-2">
+  </div>
+  <div class="col-sm-8" style="background-color: #ffffff">
+    <!--<div class="container">-->
+      <div class="row well">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6" >
+          <form action="{{ url('forum:login') }}" method="POST" class="form-horizontal">
+            {% if redirect_message %}
+              <legend>{{ redirect_message }}</legend>
+            {% endif %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <div class="form-group {% if login_form.username.errors %} has-error {% endif %}">
+              <div class="row">
+              {{login_form.username.label_tag()}}
+              {{ login_form.username }} 
+              </div>
+              <p class="help-block">
+                {{ login_form.username.errors[0] }}
+            </div>
+            <div class="form-group {% if login_form.password.errors %} has-error {% endif %}">
+              <div class="row">
+              {{login_form.password.label_tag()}}
+              {{ login_form.password }}
+              </div>
+              
+              <p class="help-block">
+                {{ login_form.password.errors[0] }}
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-success" type="submit">Log In</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-3">
+        </div>
+      </div>
+    <!--</div>-->
+  </div>
+  <div class="col-sm-2">
+  </div>
+</div>
+{% endblock %}

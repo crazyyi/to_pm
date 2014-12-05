@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-1">
+		</div>
+		<div class="col-sm-8">
+			{% if user.is_authenticated() %}
+          		<div class="pull-right">
+            		<a href="{{ url('forum:add_thread')}}" class="btn btn-primary">Add thread</a>
+          		</div>
+        	{% endif %}
+			<div class="list-group">
+				{% for post in output %}
+					<span class="list-group-item clearfix">
+					<div class="row">
+						<div class="col-sm-1 text-center">
+							<span class="glyphicon glyphicon-star-empty"></span>
+						</div>
+						<div class="col-sm-7">
+							<a href="{{ url('forum:detail', id=post.id) }}"><h4 class="list-group-item-heading">{{ post.title }}</h4></a>
+							<p class="list-group-item-text">{{ post.content[:150] }} {% if post.content|count > 150 %}...{% endif %}<a href="{{ url('forum:detail', id=post.id) }}">Read more</a></p>
+							<p></p>
+							<a href="#" class="btn btn-xs btn-primary">Like</a>
+							<span class="">Posted by <a href="{{ url('forum:user_detail', username=post.author) }}">{{post.author}}</a></span>
+
+						</div>
+						<div class="col-sm-4 pull-right">
+							
+							<span class="btn btn-primary disabled btn-xs pull-right">{{post.tag}}</span>
+							<p class="list-grpup" />
+						</div>
+					</div>
+					</span>
+					<div></div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-3">
+		</div>
+	</div>
+</div> 
+
+{% endblock %}

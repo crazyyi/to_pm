@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-sm-1">
+  		</div>
+  		<div class="col-sm-7">
+  			<div class="well">
+  				<h3>{{ post.title }}</h3>
+  				<p>{{ post.content }}</p>
+  				<p></p>
+  				<div class="row">
+  					<div class="col-sm-1">
+  					</div>
+  					<div class="col-sm-5">
+  						<span class="label label-info">{{ post.tag }}</span>
+  					</div>
+  					<div class="col-sm-6">
+  						<h5 class="pull-right">Posted by: {{ post.author }}</h5>
+  					</div>
+  				</div>
+
+          <form action="{{ url('forum:add_comment', id=post.id) }}" class="form-horizontal", method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+             
+              {{ comment_form.as_p() }}
+              <input type="submit"></input>
+          </form>
+  			</div>
+
+        <div class= "comments">
+        
+        {% for comment in comments %}
+          
+            <div class="row well">
+              {{ comment.content|safe }}
+              <div class="col-lg-8">
+                <span class="">Posted by <a href="{{ url('forum:user_detail', username=post.author) }}">{{comment.author}}</a></span>
+              </div>
+              <div class="col-lg-4">
+                  <span>{{comment.pub_date.strftime('%Y-%m-%d at %H:%m')}}</span>
+                
+              </div>
+            </div>
+          
+        {% endfor %}
+        </div>
+
+  		</div>
+  		<div class="col-sm-4">
+  		</div>
+	</div>
+{% endblock %}
