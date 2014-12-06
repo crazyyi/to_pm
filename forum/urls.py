@@ -9,5 +9,6 @@ urlpatterns = patterns('',
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^add_thread/$', views.add_thread, name='add_thread'),
 	url(r'^add_comment/(?P<id>\d+)/$', views.add_comment, name='add_comment'),
+	url(r'^edit_post/(?P<id>\d+)/$', views.edit_post, name='edit_post'),
 	url(r'^user_detail/(?P<username>[\w|\W]+)/$', views.user_detail, name='user_detail')
 	)

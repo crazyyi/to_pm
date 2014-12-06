@@ -1,8 +1,10 @@
+from django.utils import timezone
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from .models import Post, UserProfile, User
 from .forms import UserForm, UserProfileForm, LoginForm, ThreadForm, CommentForm
 from pprint import PrettyPrinter
@@ -85,6 +87,26 @@ def user_detail(request, username=None):
 	}
 	pp.pprint(user)
 	return render_to_response('user_profile.jinja', context,
+		context_instance=RequestContext(request))
+
+@login_required(login_url='/forum/login/')
+def edit_post(request, id=None):
+	# Handy method to show an error page if id is None
+	post = get_object_or_404(Post, id=id) 
+	if request.method == 'POST':
+		edit_form = ThreadForm(request.POST, instance=post)
+		if edit_form.is_valid():
+			post = edit_form.save(commit=False)
+			post.author_id = request.user.id
+			# Need to update the time
+			post.pub_date = timezone.now()
+			post.save()
+			return detail(request, id)
+	else:
+		edit_form = ThreadForm(instance=post)
+
+	return render_to_response('edit_thread.jinja', \
+		{'edit_form':edit_form},
 		context_instance=RequestContext(request))
 
 def register(request):

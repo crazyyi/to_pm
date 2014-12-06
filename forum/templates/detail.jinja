@@ -7,16 +7,19 @@
   		<div class="col-sm-7">
   			<div class="well">
   				<h3>{{ post.title }}</h3>
-  				<p>{{ post.content }}</p>
+  				<p>{{ post.content|safe }}</p>
   				<p></p>
   				<div class="row">
   					<div class="col-sm-1">
   					</div>
-  					<div class="col-sm-5">
+  					<div class="col-sm-6">
   						<span class="label label-info">{{ post.tag }}</span>
   					</div>
-  					<div class="col-sm-6">
-  						<h5 class="pull-right">Posted by: {{ post.author }}</h5>
+  					<div class="col-sm-5">
+              {% if post.author.id == user.id %}
+                <a href="{{ url('forum:edit_post', id=post.id) }}" class="btn btn-link pull-right">Edit</a>
+                {% endif %}
+  						<h5 class="pull-right">Posted by: {{ post.author.username }}</h5>
   					</div>
   				</div>
 

@@ -19,7 +19,7 @@
 						</div>
 						<div class="col-sm-7">
 							<a href="{{ url('forum:detail', id=post.id) }}"><h4 class="list-group-item-heading">{{ post.title }}</h4></a>
-							<p class="list-group-item-text">{{ post.content[:150] }} {% if post.content|count > 150 %}...{% endif %}<a href="{{ url('forum:detail', id=post.id) }}">Read more</a></p>
+							<p class="list-group-item-text">{{ post.content[:150]|safe }} {% if post.content|count > 150 %}...{% endif %}<a href="{{ url('forum:detail', id=post.id) }}">Read more</a></p>
 							<p></p>
 							<a href="#" class="btn btn-xs btn-primary">Like</a>
 							<span class="">Posted by <a href="{{ url('forum:user_detail', username=post.author) }}">{{post.author}}</a></span>

@@ -1,15 +1,6 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="row">
-  <div class="col-sm-2">
-  </div>
-  <div class="col-sm-8" style="background-color: #ffffff">
-    <!--<div class="container">-->
-      <div class="row well">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-10" >
-          <form action="{{ url('forum:add_thread') }}" method="POST" class="form-horizontal">
+{% extends "post.jinja" %}
+{% block form %}
+<form action="{{ url('forum:add_thread') }}" method="POST" class="form-horizontal">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
             <legend>Welcome to 2pm </legend>
             <div class="form-group {% if add_thread_form.title.errors %} has-error {% endif %}">
@@ -44,13 +35,4 @@
               </div>
             </div>
           </form>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-    <!--</div>-->
-  </div>
-  <div class="col-sm-2">
-  </div>
-</div>
 {% endblock %}
