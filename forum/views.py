@@ -21,7 +21,7 @@ def index(request):
 		context_instance=RequestContext(request))
 
 def detail(request, id=None):
-	post = Post.objects.get(id=id)
+	post = get_object_or_404(Post, id=id)
 	comments = Post.objects.filter(thread_post=id)
 	context = {
 		'post': post,
