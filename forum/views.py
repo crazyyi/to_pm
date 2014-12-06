@@ -41,16 +41,7 @@ def add_comment(request, id=None):
 				comment.thread_post_id = id
 				comment.save()
 
-				post = Post.objects.get(id=id)
-				comments = Post.objects.filter(thread_post=id)
-				context = {
-					'post': post,
-					'message': request.GET.get('message'),
-					'comments': comments,
-					'comment_form': CommentForm()
-				}
-				return render_to_response('detail.jinja', context,
-			context_instance=RequestContext(request))
+				return detail(request, id)
 			else:
 				context = {
 					'login_Form': LoginForm(),
@@ -58,6 +49,8 @@ def add_comment(request, id=None):
 				}
 				return render_to_response('login.jinja', context,
 			context_instance=RequestContext(request))
+		else:
+			return detail(request, id)
 	else:
 		pass
 
