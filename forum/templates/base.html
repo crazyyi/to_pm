@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}My Project{% endblock %}</title>
+    <title>{% block title %}两点钟{% endblock %}</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -69,7 +69,7 @@
                   {{ user.username }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="user_profile">
-                  <li><a href="#">Profile <span class="badge"></span></a></li>
+                  <li><a href="{{ url('forum:edit_profile', username=user.username)}}">Profile <span class="badge"></span></a></li>
                   <li><a href="#">Messages <span class="badge">3</span></a></li>
                 </ul>
               </li>

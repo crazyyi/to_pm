@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-sm-1">
+  		</div>
+  		<div class="col-sm-5">
+  			<div class="well">
+          <form action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
+            <legend>Update profile of {{ username }}</legend>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            {{ user_form.as_p() }}
+  				  {{ userprofile_form.as_p() }}
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-success" type="submit">Submit</button>
+              </div>
+            </div>
+            </form>
+  			</div>
+  		</div>
+  		<div class="col-sm-6">
+  		</div>
+	</div>
+{% endblock %}

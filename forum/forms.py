@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from captcha.fields import CaptchaField
@@ -17,7 +18,7 @@ class UserForm(forms.ModelForm):
 			'email': forms.TextInput(attrs={'class': 'col-lg-10 form-control'})
 		}
 		help_texts = {
-			'username': _('Some usefule help text'),
+			'username': _('You can\'t change your username'),
 		}
 		error_message = {
 			'username': {
@@ -26,13 +27,28 @@ class UserForm(forms.ModelForm):
 			},
 		}
 
+class EditUserForm(forms.ModelForm):
+	class Meta(UserForm):
+		model = User
+		fields = ('email', )
+		widgets = {
+			'email': forms.TextInput(attrs={'class': 'col-lg-10 form-control'}),
+		}
+		error_message = {
+			'username': {
+				'max_length' : _("This username is too long."),
+				'required': _("请填写用户名")
+			},
+		}
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avator',)
 
-class LoginForm(forms.ModelForm):
+class LoginForm(AuthenticationForm):
+	captcha = CaptchaField()
+
 	class Meta:
 		model = User
 		fields = ('username', 'password')
@@ -40,6 +56,10 @@ class LoginForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'col-lg-10 form-control'}),
             'password': forms.PasswordInput(attrs={'class': 'col-lg-10 form-control'}),
         }
+
+	def clean(self): # Raise a customized error here
+		#self.error_messages['invalid_login'] = 'Invalid username or password.'
+		return super(LoginForm, self).clean()
 
 class ThreadForm(forms.ModelForm):
 	class Meta:

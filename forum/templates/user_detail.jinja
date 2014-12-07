@@ -6,14 +6,14 @@
   		</div>
   		<div class="col-sm-5">
   			<div class="well">
-  				<h3>{{ user_profile.username }}</h3>
-  				<p>{{ user_profile.email }}</p>
+  				<h3>{{ user_detail.username }}</h3>
+  				<p>{{ user_detail.email }}</p>
   				<p></p>
   				<div class="row">
   					<div class="col-sm-5">
   					</div>
   					<div class="col-sm-7">
-  						<h5>Last login: {{ user_profile.last_login.strftime('%Y-%m-%d at %H:%m') }}</h5>
+  						<h5>Last login: {{ user_detail.last_login.strftime('%Y-%m-%d at %H:%m') }}</h5>
   					</div>
   				</div>
   			</div>

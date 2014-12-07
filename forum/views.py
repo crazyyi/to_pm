@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .models import Post, UserProfile, User
-from .forms import UserForm, UserProfileForm, LoginForm, ThreadForm, CommentForm
+from .forms import UserForm, EditUserForm, UserProfileForm, LoginForm, ThreadForm, CommentForm
 from pprint import PrettyPrinter
 
 pp = PrettyPrinter(indent=2)
@@ -81,12 +81,36 @@ def add_thread(request):
 def user_detail(request, username=None):
 	user = User.objects.get(username=username)
 
-	user_profile = UserProfile.objects.filter(id=user.id)
+	#user_profile = UserProfile.objects.filter(id=user.id)
 	context = {
-		'user_profile': user
+		'user_detail': user
 	}
-	pp.pprint(user)
-	return render_to_response('user_profile.jinja', context,
+
+	return render_to_response('user_detail.jinja', context,
+		context_instance=RequestContext(request))
+
+@login_required(login_url='/forum/login/')
+def edit_profile(request, username=None):
+	user = get_object_or_404(User, username=username)
+	userprofile = get_object_or_404(UserProfile, user__username=username)
+	if request.method == 'POST':
+		user_form = EditUserForm(request.POST, instance=user)
+		userprofile_form = UserProfileForm(request.POST, instance=userprofile)
+		if userprofile_form.is_valid():
+			user_form.save()
+			userprofile_form.save()
+			return index(request)
+	else:
+		user_form = EditUserForm(instance=user)
+		userprofile_form = UserProfileForm(instance=userprofile)
+
+	pp.pprint(userprofile_form.as_p())
+	context = {
+		'username':			username,
+		'user_form': 		user_form,
+		'userprofile_form': userprofile_form
+	}
+	return render_to_response('edit_profile.jinja', context,
 		context_instance=RequestContext(request))
 
 @login_required(login_url='/forum/login/')
@@ -148,22 +172,17 @@ def register(request):
 	return render_to_response('register.jinja', context,
 		context_instance=RequestContext(request))
 
+# We use a subclass of AuthenticationForm
 def user_login(request):
 
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
 		login_form = LoginForm(data=request.POST)
-		user = authenticate(username=username, \
-			password=password)
 
-		if user:
-			if user.is_active:
-				login(request, user)
-				return HttpResponseRedirect('/forum/')
-			else:
-				return HttpResponse("your account is disabled.")
-
+		if login_form.is_valid():
+			login(request, login_form.get_user())
+			return HttpResponseRedirect('/forum/')
 	else:
 		login_form = LoginForm()
 

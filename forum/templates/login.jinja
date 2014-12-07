@@ -9,31 +9,19 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-6" >
-          <form action="{{ url('forum:login') }}" method="POST" class="form-horizontal">
+          <form action="{{ url('forum:login') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
             {% if redirect_message %}
               <legend>{{ redirect_message }}</legend>
             {% endif %}
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-            <div class="form-group {% if login_form.username.errors %} has-error {% endif %}">
-              <div class="row">
-              {{login_form.username.label_tag()}}
-              {{ login_form.username }} 
-              </div>
-              <p class="help-block">
-                {{ login_form.username.errors[0] }}
-            </div>
-            <div class="form-group {% if login_form.password.errors %} has-error {% endif %}">
-              <div class="row">
-              {{login_form.password.label_tag()}}
-              {{ login_form.password }}
-              </div>
-              
-              <p class="help-block">
-                {{ login_form.password.errors[0] }}
+              {{ login_form.as_p() }}
+              <div class="form-group {% if login_form.username.errors %} has-error {% endif %}">
             </div>
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-success" type="submit">Log In</button>
+                <div class="row">
+                <span class="span1"><button class="btn btn-success" type="submit">Log In</button></span> <span class="span2">or <a href="{{ url('forum:register') }}" class="btn btn-link">Sign up</a></span>
+                </div>
               </div>
             </div>
           </form>
@@ -46,4 +34,30 @@
   <div class="col-sm-2">
   </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+$(function() {
+    // Add refresh button after field (this can be done in the template as well)
+    $('img.captcha').wrap(
+            $('<a href="#void" class="captcha-refresh"></a>')
+            );
+
+    // Click-handler for the refresh-link
+    $('.captcha-refresh').click(function(){
+        var $form = $(this).parents('form');
+        var url = location.protocol + "//" + window.location.hostname + ":"
+                  + location.port + "/captcha/refresh/";
+
+        // Make the AJAX-call
+        $.getJSON(url, {}, function(json) {
+            $form.find('input[name="captcha_0"]').val(json.key);
+            $form.find('img.captcha').attr('src', json.image_url);
+        });
+
+        return false;
+    });
+});
+</script>
 {% endblock %}
