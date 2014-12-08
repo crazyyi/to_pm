@@ -92,7 +92,7 @@ def user_detail(request, username=None):
 @login_required(login_url='/forum/login/')
 def edit_profile(request, username=None):
 	user = get_object_or_404(User, username=username)
-	userprofile = get_object_or_404(UserProfile, user__username=username)
+	userprofile = user.userprofile
 	if request.method == 'POST':
 		user_form = EditUserForm(request.POST, instance=user)
 		userprofile_form = UserProfileForm(request.POST, instance=userprofile)
