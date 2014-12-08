@@ -4,7 +4,7 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'to_pm.views.home', name='home'),
+    url(r'^$', 'forum.views.index', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^ckeditor/', include('ckeditor.urls')),
     url(r'^captcha/', include('captcha.urls')),
