@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from captcha.fields import CaptchaField
 from ckeditor.widgets import CKEditorWidget
+from taggit.forms import *
 from .models import UserProfile, Post
 
 class UserForm(forms.ModelForm):
@@ -64,11 +65,11 @@ class LoginForm(AuthenticationForm):
 class ThreadForm(forms.ModelForm):
 	class Meta:
 		model = Post
-		fields = ('title', 'content', 'tag')
+		fields = ('title', 'content', 'tags')
 		widgets = {
-			'title': forms.TextInput(attrs={'class': 'col-lg-10 form-control'}),
-			'content': forms.Textarea(attrs={'class': 'col-lg-10 form-control'}),
-			'tag': forms.TextInput(attrs={'class': 'col-lg-10 form-control'}),
+			'title': forms.TextInput(attrs={'class': 'col-lg-10 form-control', 'title':'标题'}, ),
+			'content': forms.Textarea(attrs={'class': 'col-lg-10 form-control', 'title':'内容'}, ),
+			'tags': TagWidget(attrs={'class': 'col-lg-10 form-control', }),
 		}
 
 class CommentForm(forms.ModelForm):

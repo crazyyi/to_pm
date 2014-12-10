@@ -51,7 +51,7 @@
         <div class="col-sm-6">
           <div class="nav-collapse">
             {% set navigation_bar = [
-              ('forum:index', 'index', 'Home'),
+              ('forum:index', 'index', '首页'),
             ] -%}
             {% set active_page = active_page|default('index') -%}
             <ul class="nav navbar-nav">
@@ -70,11 +70,11 @@
                   {{ user.username }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="user_profile">
-                  <li><a href="{{ url('forum:edit_profile', username=user.username)}}">Profile <span class="badge"></span></a></li>
-                  <li><a href="#">Messages <span class="badge">3</span></a></li>
+                  <li><a href="{{ url('forum:edit_profile', username=user.username)}}">用户设置 <span class="badge"></span></a></li>
+                  <li><a href="#">站内消息<span class="badge"></span></a></li>
                 </ul>
               </li>
-              <li><a href="{{ url('forum:logout')}}">Logout</a></li>
+              <li><a href="{{ url('forum:logout')}}">退出登录</a></li>
             </ul>
           {% else %}
             <div class="nav nav-pills">
@@ -97,7 +97,7 @@
   </div>
     <div id="footer" class="panel-footer">
       <div class="wrapper">
-        <p class="pull-right">&copy; Proudly produced by Yi | Privacy | Terms</p>
+        <p class="pull-right">&copy; A Yi Zeng Production | Privacy | Terms</p>
       </div>
     </div>
 

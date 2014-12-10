@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django_jinja',
     'captcha',
     'ckeditor',
+    'taggit'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,7 +85,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE='Asia/Shanghai'
 
 USE_I18N = True
 

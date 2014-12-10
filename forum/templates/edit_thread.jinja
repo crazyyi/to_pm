@@ -3,36 +3,11 @@
 <!-- don't put anything in action -->
 <form action="" method="POST" class="form-horizontal">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-            <legend>Welcome to 2pm </legend>
-            <div class="form-group {% if edit_form.title.errors %} has-error {% endif %}">
-              {{edit_form.title.label_tag()}}
-              <div>
-                {{ edit_form.title }} 
-              </div>
-              <p class="help-block">
-                {{ edit_form.title.errors[0] }}
-            </div>
-            <div class="form-group {% if edit_form.content.errors %} has-error {% endif %}">
-              {{edit_form.content.label_tag()}}
-              <div>
-                {{ edit_form.content }}
-              </div>
-              <p class="help-block">
-                {{ edit_form.content.errors[0] }}
-
-            </div>
-            <div class="form-group {% if edit_form.tag.errors %} has-error {% endif %}">
-              {{edit_form.tag.label_tag()}}
-              <div>
-                {{ edit_form.tag }}
-              </div>
-              <p class="help-block">
-                {{ edit_form.tag.errors[0] }}
-
-            </div>
+            <legend>欢迎来到两点钟论坛 </legend>
+              {{ edit_form.as_p()}}
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-success" type="submit">Submit</button>
+                <button class="btn btn-success" type="submit">提交</button>
               </div>
             </div>
           </form>

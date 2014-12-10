@@ -47,7 +47,7 @@ def add_comment(request, id=None):
 			else:
 				context = {
 					'login_Form': LoginForm(),
-					'redirect_message': 'Please login before you post.'
+					'redirect_message': '发言前请登录'
 				}
 				return render_to_response('login.jinja', context,
 			context_instance=RequestContext(request))
@@ -63,8 +63,13 @@ def add_thread(request):
 		if add_thread_form.is_valid():
 			if request.user.is_authenticated():
 				thread = add_thread_form.save(commit=False)
+
+				m_tags = add_thread_form.cleaned_data['m_tags']
+
 				thread.author_id = request.user.id
 				thread.save()
+				for m_tag in m_tags:
+					thread.tags.add(m_tag)
 				return HttpResponseRedirect('/forum/')
 		else:
 			print (add_thread_form.errors)
@@ -122,9 +127,18 @@ def edit_post(request, id=None):
 		if edit_form.is_valid():
 			post = edit_form.save(commit=False)
 			post.author_id = request.user.id
+			m_tags = edit_form.cleaned_data['tags']
+			print ('m_tags = ', m_tags)
 			# Need to update the time
-			post.pub_date = timezone.now()
+			if not post.pub_date:
+				post.pub_date = timezone.now()
+			post.last_edited_date = timezone.now()
 			post.save()
+			post.tags.clear()
+			for m_tag in m_tags:
+				print ('m_tag:', m_tag)
+				post.tags.add(m_tag)
+			
 			return detail(request, id)
 	else:
 		edit_form = ThreadForm(instance=post)
@@ -188,7 +202,7 @@ def user_login(request):
 
 	context = {
 		'login_form': login_form,
-		'redirect_message': 'Please login to join discussion.'
+		'redirect_message': '发言前请登录'
 	}
 	
 	return render_to_response('login.jinja', context,
