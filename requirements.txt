@@ -4,6 +4,8 @@ Jinja2==2.7.3
 Pillow==2.6.1
 django-simple-captcha==0.4.3
 django-taggit
+django-haystack
+whoosh
 pytz
 psycopg2
 django-ckeditor

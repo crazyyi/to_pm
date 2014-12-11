@@ -15,3 +15,35 @@
 .nav-pills {
 	margin-top: 10px;
 }
+
+.navbar-search {
+	position: relative;
+	margin-top: 10px;
+}
+
+/*sticky footer -based on Twitter Bootstraps' fixed navigation */
+/*- by Cristovao Verstraeten - apleasantview.com 2013 */
+/*Tip: you might need to add a bottom margin to your main content box*/
+ 
+.foot-fixed-bottom {
+ bottom: 0;
+ display: block;
+ left: 0;
+ margin-bottom: 0;
+ position: fixed;
+ right: 0;
+ z-index: 1030;
+}
+.foot-fixed-bottom .container {
+ background-color: #eee;
+ margin-left: auto;
+ margin-right: auto;
+ padding-bottom: 2px;
+}
+.foot-fixed-bottom p {
+ color: rgb(0, 0, 0);
+ font-size: 15px;
+ margin: 0 12px 13px;
+}
+ 
+/*that's all folks!*/

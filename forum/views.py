@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from haystack.forms import ModelSearchForm, HighlightedSearchForm
 from .models import Post, UserProfile, User
 from .forms import UserForm, EditUserForm, UserProfileForm, LoginForm, ThreadForm, CommentForm
 from pprint import PrettyPrinter
@@ -18,6 +19,16 @@ def index(request):
 		'output': latest_post_list
 	}
 	return render_to_response('index.jinja', context, 
+		context_instance=RequestContext(request))
+
+def search(request):
+	form = ModelSearchForm(request.GET)
+	results = form.search()
+
+	context = {
+		'form':form,
+	}
+	return render_to_response('search/search.jinja', context, \
 		context_instance=RequestContext(request))
 
 def detail(request, id=None):

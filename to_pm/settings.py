@@ -52,7 +52,8 @@ INSTALLED_APPS = (
     'django_jinja',
     'captcha',
     'ckeditor',
-    'taggit'
+    'taggit',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -123,6 +124,15 @@ CKEDITOR_CONFIGS = {
         # CKEDITOR.ENTER_BR 2
         # CKEDITOR.ENTER_DIV 3 
         'forcePasteAsPlainText': True
+    },
+}
+
+# Haystack settings
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
     },
 }
 
