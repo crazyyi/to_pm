@@ -75,7 +75,7 @@ def add_thread(request):
 			if request.user.is_authenticated():
 				thread = add_thread_form.save(commit=False)
 
-				m_tags = add_thread_form.cleaned_data['m_tags']
+				m_tags = add_thread_form.cleaned_data['tags']
 
 				thread.author_id = request.user.id
 				thread.save()

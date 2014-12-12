@@ -6,6 +6,7 @@ django-simple-captcha==0.4.3
 django-taggit
 django-haystack
 whoosh
+jieba3k
 pytz
 psycopg2
 django-ckeditor
