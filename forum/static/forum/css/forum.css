@@ -21,6 +21,17 @@
 	margin-top: 10px;
 }
 
+.item {
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	padding: 8px 10px 6px;
+	zoom: 1;
+}
+
+.item .main {
+	overflow: hidden;
+}
+
 /*sticky footer -based on Twitter Bootstraps' fixed navigation */
 /*- by Cristovao Verstraeten - apleasantview.com 2013 */
 /*Tip: you might need to add a bottom margin to your main content box*/
